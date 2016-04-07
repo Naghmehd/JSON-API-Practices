@@ -5,3 +5,10 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+(1..20).each do |num|
+  post = Post.create!(title: Faker::word,
+                      body: Faker::Hipster.sentence(3))
+end
+10.times do
+  user = User.create!(username: Faker::Superhero.name
+                      )
