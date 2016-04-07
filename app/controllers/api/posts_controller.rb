@@ -2,19 +2,24 @@ class Api::PostsController < ApplicationController
   respond_to :json
 
   def index
-    respond_with @post = post.all
+    respond_with @post = Post.all
   end
 
   def show
+    @post = set_post
     respond_with @post
+
+    rescue ActiveRecord::RecordNotFound
+    render json: { message: "Not found", status: 404 }, status: 404
   end
 
   def new
-    respond_with @post = post.new
+    respond_with @post = Post.new
   end
 
   def create
-    respond_with @post = post.new(postname: params[:post][:postname])
+    respond_with @post = Post.new(postname: params[:post][:postname])
+
   end
 
   def edit
@@ -25,21 +30,27 @@ class Api::PostsController < ApplicationController
     @post.update(post_params)
 
     respond_with @post
+
+    rescue ActiveRecord::RecordNotFound
+    render json: { message: "Not found", status: 404 }, status: 404
   end
 
   def destroy
     @post.destroy
 
     respond_with @post.destroy
-  end
+
+    rescue ActiveRecord::RecordNotFound
+    render json: { message: "Not found", status: 404 }, status: 404
+    end
 
   private
 
   def set_post
-    @post = post.find(params[:id])
+    @post = Post.find(params[:id])
   end
 
   def post_params
-      params.require(:post).permit(:postname)
+      params.require(:post).permit(:title)
   end
 end
