@@ -1,4 +1,5 @@
 class Api::UsersController < ApplicationController
+  protect_from_forgery with: :null_session
   respond_to :json
 
   def index
@@ -27,6 +28,7 @@ class Api::UsersController < ApplicationController
   end
 
   def update
+    @user = set_user
     @user.update(user_params)
 
     respond_with @user
