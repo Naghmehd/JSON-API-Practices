@@ -5,7 +5,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find(params[:id])
+    @post = Post.set_post
   end
 
 
@@ -21,7 +21,7 @@ class PostsController < ApplicationController
     end
 
     def editing
-      @post = Post.find(params[:id])
+      @post = set_post
     end
 
     def  updated
@@ -29,11 +29,15 @@ class PostsController < ApplicationController
     end
 
     def destroy
-      @post = Post.find(params[:id])
+      @post = set_post
       @post.destroy
     end
 
   private
+
+  def set_post
+    @post = Post.find(params[:id])
+  end
 
   def post_params
     params.require(:post).permit(:body, :title)

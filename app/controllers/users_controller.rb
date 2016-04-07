@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = set_user
   end
 
   def new
@@ -18,16 +18,26 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
+    @user = set_user
   end
 
   def  updated
-    User.update(params[:id])
+    User.update(params[:id], user_params)
   end
 
   def destroy
-    @user = User.find(params[:id])
+    @user = set_user
     @user.destroy
+  end
+
+private
+
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  def user_params
+      params.require(:user).permit(:username)
   end
 
 end
