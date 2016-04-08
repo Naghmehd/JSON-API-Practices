@@ -8,22 +8,24 @@ class Api::UsersController < ApplicationController
   end
 
   def show
-    @user = set_user
-    respond_with @user
-
-  rescue ActiveRecord::RecordNotFound
+   @user = User.find(params[:id])
+   respond_with @user, :include => :posts
+    rescue ActiveRecord::RecordNotFound
     render json: { message: "Not found", status: 404 }, status: 404
   end
 
   def new
+    @user = User.new
     respond_with @user = User.new
   end
 
   def create
+    @user = User.new
     respond_with @user = User.new(username: params[:user][:username])
   end
 
   def edit
+    @user = set_user
     respond_with @user
   end
 
@@ -56,4 +58,6 @@ class Api::UsersController < ApplicationController
   def user_params
       params.require(:user).permit(:username)
   end
+
+  
 end
