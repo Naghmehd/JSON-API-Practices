@@ -41,6 +41,7 @@ class Api::UsersController < ApplicationController
 
 
   def destroy
+    @uer = set_user
     @user.destroy
 
     respond_with @user.destroy
@@ -59,5 +60,5 @@ class Api::UsersController < ApplicationController
       params.require(:user).permit(:username)
   end
 
-  
+
 end

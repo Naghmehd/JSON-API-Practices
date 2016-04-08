@@ -15,15 +15,18 @@ class Api::PostsController < ApplicationController
   end
 
   def new
+    @post = Post.new
     respond_with @post = Post.new
   end
 
   def create
+    @post = Post.new
     respond_with @post = Post.new(postname: params[:post][:postname])
 
   end
 
   def edit
+    @post = set_post
     respond_with @post
   end
 
@@ -38,6 +41,7 @@ class Api::PostsController < ApplicationController
   end
 
   def destroy
+    @post = set_post
     @post.destroy
 
     respond_with @post.destroy
